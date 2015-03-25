@@ -5322,3 +5322,25 @@ button.close {
     width: 80%;
     max-width: 600px;
     height: auto; }
+
+.tom-yehuda-chat {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: -1;
+  background-color: #262626;
+  color: #FF523B; }
+  .tom-yehuda-chat h1 {
+    text-align: center; }
+  .tom-yehuda-chat .visitor img {
+    width: 95%;
+    padding: 5%; }
+  .tom-yehuda-chat .visitor-2 img {
+    width: 30px;
+    padding: 5px; }
+  .tom-yehuda-chat .google-map {
+    width: 100px;
+    height: 100px; }
