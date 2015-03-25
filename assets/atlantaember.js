@@ -29,12 +29,17 @@ define('atlantaember/components/google-map', ['exports', 'ember'], function (exp
     hugeLng: -84.385605, // should really get passed in
 
     staticOptions: {
-      zoom: 8,
+      zoom: 13,
       scrollwheel: false,
       navigationControl: false,
       mapTypeControl: false,
       scaleControl: false
     },
+
+    initialize: (function () {
+      this.set("map", this.get("map"));
+      this.addMarker();
+    }).on("didInsertElement"),
 
     latLng: (function () {
       return new google.maps.LatLng(this.get("hugeLat"), this.get("hugeLng"));
@@ -51,11 +56,6 @@ define('atlantaember/components/google-map', ['exports', 'ember'], function (exp
       return new google.maps.Map(element, this.get("mapOptions"));
     }).property(),
 
-    initialize: (function () {
-      this.set("map", this.get("map"));
-      this.addMarker();
-    }).on("didInsertElement"),
-
     addMarker: function addMarker() {
       var _this = this;
       var map = this.get("map");
@@ -63,10 +63,10 @@ define('atlantaember/components/google-map', ['exports', 'ember'], function (exp
         position: this.get("latLng"),
         animation: google.maps.Animation.DROP,
         map: map,
-        title: "Huge"
+        title: "Huge",
+        icon: "/assets/images/ember-pointer-small.png"
       });
     }
-
   });
 
 });
@@ -576,7 +576,7 @@ catch(err) {
 if (runningTests) {
   require("atlantaember/tests/test-helper");
 } else {
-  require("atlantaember/app")["default"].create({"name":"atlantaember","version":"0.0.0.c3abc347"});
+  require("atlantaember/app")["default"].create({"name":"atlantaember","version":"0.0.0.f2bea742"});
 }
 
 /* jshint ignore:end */
