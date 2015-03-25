@@ -5338,9 +5338,12 @@ button.close {
   .tom-yehuda-chat .visitor img {
     width: 95%;
     padding: 5%; }
+    .tom-yehuda-chat .visitor img.ember-logo {
+      margin-top: 80px; }
   .tom-yehuda-chat .visitor-2 img {
     width: 30px;
     padding: 5px; }
   .tom-yehuda-chat .google-map {
-    width: 100px;
-    height: 100px; }
+    margin-top: 40px;
+    width: 100%;
+    height: 400px; }

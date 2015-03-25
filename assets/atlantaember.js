@@ -25,15 +25,47 @@ define('atlantaember/components/google-map', ['exports', 'ember'], function (exp
 
   exports['default'] = Ember['default'].Component.extend({
     classNames: ["google-map"],
+    hugeLat: 33.792418, // should really get passed in
+    hugeLng: -84.385605, // should really get passed in
+
+    staticOptions: {
+      zoom: 8,
+      scrollwheel: false,
+      navigationControl: false,
+      mapTypeControl: false,
+      scaleControl: false
+    },
+
+    latLng: (function () {
+      return new google.maps.LatLng(this.get("hugeLat"), this.get("hugeLng"));
+    }).property(),
+
+    mapOptions: (function () {
+      var options = this.get("staticOptions");
+      options.center = this.get("latLng");
+      return options;
+    }).property(),
+
+    map: (function () {
+      var element = document.getElementById(this.get("elementId"));
+      return new google.maps.Map(element, this.get("mapOptions"));
+    }).property(),
 
     initialize: (function () {
-      var mapOptions = {
-        zoom: 8,
-        center: new google.maps.LatLng(-34.397, 150.644)
-      };
-      var map = new google.maps.Map(document.getElementById(this.get("elementId")), mapOptions);
-      this.set("map", map);
-    }).on("didInsertElement")
+      this.set("map", this.get("map"));
+      this.addMarker();
+    }).on("didInsertElement"),
+
+    addMarker: function addMarker() {
+      var _this = this;
+      var map = this.get("map");
+      var marker = new google.maps.Marker({
+        position: this.get("latLng"),
+        animation: google.maps.Animation.DROP,
+        map: map,
+        title: "Huge"
+      });
+    }
 
   });
 
@@ -277,6 +309,64 @@ define('atlantaember/templates/tom-yehuda-chat', ['exports'], function (exports)
         dom.setAttribute(el1,"class","tom-yehuda-chat");
         var el2 = dom.createTextNode("\n\n\n  ");
         dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2,"class","row");
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","visitor col-md-4 col-sm-4 col-xs-4");
+        var el4 = dom.createTextNode("\n      ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("h1");
+        dom.setAttribute(el4,"class","name");
+        var el5 = dom.createTextNode("Tom Dale");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n      ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4,"src","/assets/images/tom.jpg");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","visitor col-md-4 col-sm-4 col-xs-4");
+        var el4 = dom.createTextNode("\n      ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4,"class","ember-logo");
+        dom.setAttribute(el4,"src","/assets/images/ember-logo.png");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","visitor col-md-4 col-sm-4 col-xs-4");
+        var el4 = dom.createTextNode("\n      ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("h1");
+        dom.setAttribute(el4,"class","name");
+        var el5 = dom.createTextNode("Yehuda Katz");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n      ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4,"src","/assets/images/yehuda.jpg");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n  ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n\n  ");
+        dom.appendChild(el1, el2);
         var el2 = dom.createTextNode("\n\n");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
@@ -304,7 +394,7 @@ define('atlantaember/templates/tom-yehuda-chat', ['exports'], function (exports)
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),0,1);
+        var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),2,3);
         content(env, morph0, context, "google-map");
         return fragment;
       }
@@ -328,7 +418,7 @@ define('atlantaember/tests/components/google-map.jshint', function () {
 
   module('JSHint - components');
   test('components/google-map.js should pass jshint', function() { 
-    ok(true, 'components/google-map.js should pass jshint.'); 
+    ok(false, 'components/google-map.js should pass jshint.\ncomponents/google-map.js: line 37, col 9, \'_this\' is defined but never used.\ncomponents/google-map.js: line 39, col 9, \'marker\' is defined but never used.\n\n2 errors'); 
   });
 
 });
@@ -486,7 +576,7 @@ catch(err) {
 if (runningTests) {
   require("atlantaember/tests/test-helper");
 } else {
-  require("atlantaember/app")["default"].create({"name":"atlantaember","version":"0.0.0.960cfa48"});
+  require("atlantaember/app")["default"].create({"name":"atlantaember","version":"0.0.0.c3abc347"});
 }
 
 /* jshint ignore:end */
